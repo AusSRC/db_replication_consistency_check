@@ -2,7 +2,7 @@
 
 import unittest
 from tests.test_connection import TestConnection
-from tests.test_queries import TestQueryResults
+from tests.test_queries import TestSourceFindingQueryResults
 
 
 if __name__ == '__main__':
