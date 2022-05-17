@@ -1,26 +1,25 @@
-# Replication check
+# Database replication consistency check
 
-Check the results of certain PostgreSQL queries are the same across regional centres. Makes use of Python `unittest` module. 
+The consistency of the database tables is determined by the comparison of results for a set of queries. If each database returns the same result, we say that they are consistent. Otherwise, this API will state which databases are consistent with the main.
 
-## Running
+## Configuration
 
-Set environment variables
-
-```
-export AUSSRC_PASSWORD=...
-export SPSRC_PASSWORD=...
-```
-
-Install dependencies
+We get database credentials from a `config.ini` file. Each entry is a database that will be checked against each other for consistency
 
 ```
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
+[database]
+host = 
+port = 5432
+user = 
+password = 
+database = 
 
-Run unittest module
+[replica]
+host = 
+port = 5432
+user = 
+password = 
+database = 
 
-```
-./main.py
+...
 ```
