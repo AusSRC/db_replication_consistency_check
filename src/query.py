@@ -7,11 +7,14 @@ import random
 from utils import parse_config
 
 
-async def table_query_consistency_check(cred_dict):
+async def table_query_consistency_check():
         """Check that the number of rows in important database tables is the same between regional centres.
 
         """
         consistent = False
+        cred_dict = parse_config()
+
+        # Assert table counts are the same
         count_queries = [
             'SELECT COUNT(*) FROM wallaby.run;',
             'SELECT COUNT(*) FROM wallaby.product;',
@@ -20,8 +23,6 @@ async def table_query_consistency_check(cred_dict):
             'SELECT COUNT(*) FROM wallaby.source_detection;',
             'SELECT COUNT(*) FROM wallaby.tag;',
         ]
-
-        # Assert table counts are the same
         counts = []
         for query in count_queries:
             count_res_list = []
@@ -55,7 +56,6 @@ async def table_query_consistency_check(cred_dict):
             f'SELECT * FROM wallaby.source_detection WHERE id={random.randint(0, counts[4])};',
             f'SELECT * FROM wallaby.tag WHERE id={random.randint(0, counts[5])};',
         ]
-
         for query in random_entry_queries:
             value_res_list = []
             for db_name, db_cred in cred_dict.items():
@@ -82,6 +82,5 @@ async def table_query_consistency_check(cred_dict):
 
 
 if __name__ == '__main__':
-    cred_dict = parse_config()
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(table_query_consistency_check(cred_dict))
+    loop.run_until_complete(table_query_consistency_check())
